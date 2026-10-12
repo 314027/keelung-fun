@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基隆哪裡趣 - 導覽地圖</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: #005f73;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        #map {
+            flex: 1;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌊 基隆哪裡趣｜互動導覽地圖</h1>
+    </header>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 初始化地圖，中心點設在基隆市中心 (25.1283, 121.7419)
+        const map = L.map('map').setView([25.1283, 121.7419], 13);
+
+        // 載入 OpenStreetMap 圖資
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 景點資料陣列
+        const spots = [
+            {
+                name: "基隆廟口夜市",
+                lat: 25.1283,
+                lng: 121.7419,
+                desc: "知名美食聚集地，包含營養三明治、泡泡冰等著名小吃。"
+            },
+            {
+                name: "正濱漁港彩色屋",
+                lat: 25.1528,
+                lng: 121.7689,
+                desc: "繽紛彩繪房屋，有台灣版威尼斯之稱，拍照熱門打卡點。"
+            },
+            {
+                name: "和平島地質公園",
+                lat: 25.1601,
+                lng: 121.7645,
+                desc: "擁有豐富海岸地質景觀與天然海水游泳池。"
+            },
+            {
+                name: "潮境公園",
+                lat: 25.1415,
+                lng: 121.8041,
+                desc: "巨大飛天掃帚裝置藝術，可遠眺基隆嶼與海景。"
+            }
+        ];
+
+        // 循環新增標籤至地圖
+        spots.forEach(spot => {
+            L.marker([spot.lat, spot.lng])
+                .addTo(map)
+                .bindPopup(`<b>${spot.name}</b><br>${spot.desc}`);
+        });
+    </script>
+</body>
+</html>
